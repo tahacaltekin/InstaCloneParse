@@ -28,7 +28,7 @@ import java.util.List;
 public class FeedActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> usernamesFromParse;
-    ArrayList<String> usercommentFromParse;
+    ArrayList<String> userCommentFromParse;
     ArrayList<Bitmap> userImageFromParse;
     PostClass postClass;
 
@@ -59,7 +59,6 @@ public class FeedActivity extends AppCompatActivity {
                     }else {
                         Intent intent = new Intent(getApplicationContext(),SignUpActivity.class);
                         startActivity(intent);
-                        finish();
                     }
                 }
             });
@@ -75,10 +74,10 @@ public class FeedActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
         usernamesFromParse = new ArrayList<>();
-        usercommentFromParse = new ArrayList<>();
+        userCommentFromParse = new ArrayList<>();
         userImageFromParse = new ArrayList<>();
 
-        postClass = new PostClass(usernamesFromParse,usercommentFromParse,userImageFromParse,this);
+        postClass = new PostClass(usernamesFromParse,userCommentFromParse,userImageFromParse,this);
 
         listView.setAdapter(postClass);
 
@@ -94,22 +93,22 @@ public class FeedActivity extends AppCompatActivity {
                 if (e != null) {
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
                 }else {
-                    if (objects.size() > 0 ) {
+                    if (objects.size() > 0) {
 
                         for (final ParseObject object : objects) {
 
-                            ParseFile parseFile = (ParseFile) object.get("image");
+                            final ParseFile parseFile = (ParseFile) object.get("image");
 
                             parseFile.getDataInBackground(new GetDataCallback() {
                                 @Override
                                 public void done(byte[] data, ParseException e) {
-                                    if (e != null && data != null) {
+                                    if (e == null && data != null) {
 
                                         Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length);
 
                                         userImageFromParse.add(bitmap);
                                         usernamesFromParse.add(object.getString("username"));
-                                        usercommentFromParse.add(object.getString("comment"));
+                                        userCommentFromParse.add(object.getString("comment"));
 
                                         postClass.notifyDataSetChanged();
                                     }

@@ -1,5 +1,6 @@
 package com.example.instagramcloneparse;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -45,6 +46,6 @@ public class PostClass extends ArrayAdapter<String> {
         imageView.setImageBitmap(userImage.get(position));
         commentText.setText(userComment.get(position));
 
-        return super.getView(position, convertView, parent);
+        return customView;
     }
 }
